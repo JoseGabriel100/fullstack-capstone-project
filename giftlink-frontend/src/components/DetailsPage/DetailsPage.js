@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './DetailsPage.css';
+import {urlConfig} from '../../config';
 
 function DetailsPage() {
     const navigate = useNavigate();
@@ -13,14 +14,15 @@ function DetailsPage() {
         const authenticationToken = sessionStorage.getItem('auth-token');
         if (!authenticationToken) {
             // Task 1: Check for authentication and redirect
-            navigate('/app/login')
+            navigate('/app/login');
         }
 
         // get the gift to be rendered on the details page
         const fetchGift = async () => {
             try {
                 // Task 2: Fetch gift details
-                const response = await fetch(`${urlConfig.backendUrl}/api/gifts/${productId}`);
+                const url = `${urlConfig.backendUrl}/api/gifts/${productId}`;
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -36,14 +38,13 @@ function DetailsPage() {
         fetchGift();
 
         // Task 3: Scroll to top on component mount
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
 
-    }, [productId]);
-
+    }, [productId, navigate]);
 
     const handleBackClick = () => {
         // Task 4: Handle back click
-        navigate(-1)
+        navigate(-1);
     };
 
     //The comments have been hardcoded for this project.
@@ -70,7 +71,6 @@ function DetailsPage() {
         }
     ];
 
-
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
     if (!gift) return <div>Gift not found</div>;
@@ -91,34 +91,34 @@ function DetailsPage() {
                             <div className="no-image-available-large">No Image Available</div>
                         )}
                     </div>
-                    // Task 6: Display gift details
-                    <p><strong>Category:</strong>
+                    {/* Task 6: Display gift details */}
+                    <p><strong>Category:</strong> 
                         {gift.category}
                     </p>
-                    <p><strong>Condition:</strong>
-                        {/* insert code here  */}
+                    <p><strong>Condition:</strong> 
+                        {gift.condition}
                     </p>
-                    <p><strong>Date Added:</strong>
-                        {/* insert code here  */}
+                    <p><strong>Date Added:</strong> 
+                        {gift.dateAdded}
                     </p>
-                    <p><strong>Age (Years):</strong>
-                        {/* insert code here  */}
+                    <p><strong>Age (Years):</strong> 
+                        {gift.age}
                     </p>
-                    <p><strong>Description:</strong>
-                        {/* insert code here  */}
+                    <p><strong>Description:</strong> 
+                        {gift.description}
                     </p>
                 </div>
             </div>
             <div className="comments-section mt-4">
                 <h3 className="mb-3">Comments</h3>
-				// Task 7: Render comments section by using the map function to go through all the comments
+                {/* Task 7: Render comments section */}
                 {comments.map((comment, index) => (
-                <div key={index} className="card mb-3">
-                    <div className="card-body">
-                        <p className="comment-author"><strong>{comment.author}:</strong></p>
-                        <p className="comment-text">{comment.comment}</p>
+                    <div key={index} className="card mb-3">
+                        <div className="card-body">
+                            <p className="comment-author"><strong>{comment.author}:</strong></p>
+                            <p className="comment-text">{comment.comment}</p>
+                        </div>
                     </div>
-                </div>
                 ))}
             </div>
         </div>
