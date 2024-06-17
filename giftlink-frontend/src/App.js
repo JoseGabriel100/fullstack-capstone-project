@@ -11,7 +11,7 @@ import SearchPage from './components/SearchPage/SearchPage';
 import Profile from './components/Profile/Profile';
 
 function App() {
-    // const navigate = useNavigate();
+
     return (
         <>
             <Navbar />
@@ -22,7 +22,7 @@ function App() {
                 <Route path="/app/register" element={<RegisterPage />} />
                 <Route path="/app/product/:productId" element={<DetailsPage />} />
                 <Route path="/app/search" element={<SearchPage />} />
-                <Route path="/app/profile" element={<Profile/>} />
+                <Route path="/app/profile" element={<Profile />} />
             </Routes>
         </>
     );
